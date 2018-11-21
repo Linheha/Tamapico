@@ -1,6 +1,44 @@
 pico-8 cartridge // http://www.pico-8.com
 version 16
 __lua__
+health = 16
+hunger = 0
+hunger_hurt_thres = 60
+hunger_hurt_period = 10
+
+function feed(amount)
+	if hunger > amount then
+		hunger -= amount
+	else
+		hunger = 0
+	end
+end
+
+function _update()
+	hunger += 1
+	if hunger > hunger_hurt_thres then
+		health -= 1
+		hunger -= hunger_hurt_period
+	end
+	if health == 0 then
+		_draw = draw_gameover
+	end
+end
+
+function _draw()
+	cls()
+	for i=1,16 do
+		if health >= i then
+			pset(i,0,3)
+		end
+	end
+end
+
+function draw_gameover()
+	for i=1,64 do
+		pset(rnd(127),rnd(127),8)
+	end
+end
 
 __map__
 0000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
