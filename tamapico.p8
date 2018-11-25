@@ -1,11 +1,16 @@
 pico-8 cartridge // http://www.pico-8.com
 version 16
 __lua__
+-- general
+tm_name = "poopy"
 health = 16
 hunger = 0
 hunger_hurt_thres = 60
 hunger_hurt_period = 10
 
+function _init()
+	--start_name_select()
+end
 function feed(amount)
 	if hunger > amount then
 		hunger -= amount
@@ -14,7 +19,7 @@ function feed(amount)
 	end
 end
 
-function _update()
+function test_update()
 	hunger += 1
 	if hunger > hunger_hurt_thres then
 		health -= 1
@@ -25,7 +30,7 @@ function _update()
 	end
 end
 
-function _draw()
+function test_draw()
 	cls()
 	for i=1,16 do
 		if health >= i then
@@ -39,6 +44,66 @@ function draw_gameover()
 		pset(rnd(127),rnd(127),8)
 	end
 end
+
+-->8
+-- name selection
+ns_size = 5
+ns_letters = "_abcdefghijklmnopqrstuvwxyz0123456789"
+function start_name_select()
+	ns_pos = 1
+	ns_frame = 0
+	ns_name = {}
+	ns_pos = 1
+	for i=1,ns_size do
+		ns_name[i] = 0
+	end
+	_update = ns_update
+	_draw = ns_draw
+end
+function ns_update()
+	if btnp(4) then
+		-- Set tama name
+		tm_name = ""
+		for i=1,ns_size do
+			local letter = sub(ns_letters, ns_name[i]+1, ns_name[i]+1)
+			if letter != "_" then
+				tm_name = tm_name .. letter
+			end
+		end
+		_update = function() end
+		_draw = draw_gameover
+	elseif btnp(0) then
+		ns_pos -= 1
+	elseif btnp(1) then
+		ns_pos += 1
+	elseif btnp(2) then
+		ns_name[ns_pos] += 1
+	elseif btnp(3) then
+		ns_name[ns_pos] -= 1
+	end
+	ns_pos = ((ns_pos-1+ns_size) % ns_size)+1
+	ns_name[ns_pos] = (ns_name[ns_pos]+#ns_letters) % #ns_letters
+	ns_frame += 1
+end
+function ns_draw()
+	cls()
+	-- add background here
+
+	local name = ""
+	for i=1,ns_size do
+		if i==ns_pos and (ns_frame%16) < 2 then
+			name = name .. "*"
+		else
+			name = name .. sub(ns_letters, ns_name[i]+1, ns_name[i]+1)
+		end
+	end
+
+	print("choose a name:", 40, 50)
+	print(name, 55, 60)
+end
+
+-->8
+-- nothing yet
 
 __map__
 0000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
