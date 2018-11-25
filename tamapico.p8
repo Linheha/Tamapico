@@ -65,9 +65,8 @@ function ns_update()
 		-- Set tama name
 		tm_name = ""
 		for i=1,ns_size do
-			local letter = sub(ns_letters, ns_name[i]+1, ns_name[i]+1)
-			if letter != "_" then
-				tm_name = tm_name .. letter
+			if ns_name[i] > 0 then
+				tm_name = tm_name .. sub(ns_letters, ns_name[i]+1, ns_name[i]+1)
 			end
 		end
 		_update = function() end
