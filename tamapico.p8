@@ -109,14 +109,14 @@ end
 -- ui
 
 buttons = {
-	{
-		sprite = 2,
+	{ -- Feed
+		sprite = 16,
 	},
-	{
-		sprite = 3,
+	{ -- Sleep
+		sprite = 18,
 	},
-	{
-		sprite = 4,
+	{ -- Pet
+		sprite = 20,
 	},
 }
 ui_select = 1
@@ -135,10 +135,11 @@ function ui_update()
 end
 function ui_draw()
 	cls()
+	map(1,3,8,0,8,2)
 	for i,button in pairs(buttons) do
-		spr(button.sprite, i*8, 0)
+		spr(button.sprite, i*16, 0, 2, 2)
 		if i==ui_select and frame%8 < 4 then
-			spr(1, i*8, 0) -- select sprite
+			spr(22, i*16, 0, 2, 2) -- select sprite
 		end
 	end
 end
