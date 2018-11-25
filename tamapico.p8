@@ -101,7 +101,47 @@ function ns_draw()
 end
 
 -->8
--- nothing yet
+-- ui
+
+buttons = {
+	{
+		sprite = 2,
+	},
+	{
+		sprite = 3,
+	},
+	{
+		sprite = 4,
+	},
+}
+ui_select = 1
+
+function ui_update()
+	if btnp(4) then
+		buttons[ui_select].action()
+	elseif btnp(0) then
+		ui_select = mod(ui_select-1, #buttons)
+	elseif btnp(1) then
+		ui_select = mod(ui_select+1, #buttons)
+	end
+	frame += 1
+end
+function ui_draw()
+	cls()
+	for i,button in pairs(buttons) do
+		spr(button.sprite, i*8, 0)
+		if i==ui_select and frame%8 < 4 then
+			spr(1, i*8, 0) -- Select sprite
+		end
+	end
+end
+
+-->8
+-- util
+
+function mod(x,m)
+	return ((x+m-1) % m)+1
+end
 
 __gfx__
 00000000000000990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
