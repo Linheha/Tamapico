@@ -71,7 +71,7 @@ function ns_update()
 			end
 		end
 		_update = function() end
-		_draw = draw_gameover
+		_draw = function() end
 	elseif btnp(0) then
 		ns_pos -= 1
 	elseif btnp(1) then
