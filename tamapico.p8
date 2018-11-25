@@ -61,7 +61,7 @@ function start_name_select()
 end
 function ns_update()
 	if btnp(4) then
-		-- Set tama name
+		-- set tama name
 		tm_name = ""
 		for i=0,ns_size-1 do
 			if ns_name[i] > 0 then
@@ -131,7 +131,7 @@ function ui_draw()
 	for i,button in pairs(buttons) do
 		spr(button.sprite, i*8, 0)
 		if i==ui_select and frame%8 < 4 then
-			spr(1, i*8, 0) -- Select sprite
+			spr(1, i*8, 0) -- select sprite
 		end
 	end
 end
