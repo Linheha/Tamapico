@@ -50,11 +50,10 @@ end
 ns_size = 5
 ns_letters = "_abcdefghijklmnopqrstuvwxyz0123456789"
 function start_name_select()
-	ns_pos = 1
+	ns_pos = 0
 	ns_frame = 0
 	ns_name = {}
-	ns_pos = 1
-	for i=1,ns_size do
+	for i=0,ns_size-1 do
 		ns_name[i] = 0
 	end
 	_update = ns_update
@@ -64,7 +63,7 @@ function ns_update()
 	if btnp(4) then
 		-- Set tama name
 		tm_name = ""
-		for i=1,ns_size do
+		for i=0,ns_size-1 do
 			if ns_name[i] > 0 then
 				tm_name = tm_name .. sub(ns_letters, ns_name[i]+1, ns_name[i]+1)
 			end
@@ -80,7 +79,7 @@ function ns_update()
 	elseif btnp(3) then
 		ns_name[ns_pos] -= 1
 	end
-	ns_pos = ((ns_pos-1+ns_size) % ns_size)+1
+	ns_pos = (ns_pos+ns_size) % ns_size
 	ns_name[ns_pos] = (ns_name[ns_pos]+#ns_letters) % #ns_letters
 	ns_frame += 1
 end
@@ -89,7 +88,7 @@ function ns_draw()
 	-- add background here
 
 	local name = ""
-	for i=1,ns_size do
+	for i=0,ns_size-1 do
 		if i==ns_pos and (ns_frame%16) < 8 then
 			name = name .. (ns_name[i]>0 and "_" or " ")
 		else
