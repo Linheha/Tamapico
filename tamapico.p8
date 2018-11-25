@@ -90,8 +90,8 @@ function ns_draw()
 
 	local name = ""
 	for i=1,ns_size do
-		if i==ns_pos and (ns_frame%16) < 2 then
-			name = name .. "*"
+		if i==ns_pos and (ns_frame%16) < 8 then
+			name = name .. (ns_name[i]>0 and "_" or " ")
 		else
 			name = name .. sub(ns_letters, ns_name[i]+1, ns_name[i]+1)
 		end
