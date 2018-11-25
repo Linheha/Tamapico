@@ -7,6 +7,7 @@ health = 16
 hunger = 0
 hunger_hurt_thres = 60
 hunger_hurt_period = 10
+frame = 0
 
 function _init()
 	--start_name_select()
@@ -51,7 +52,6 @@ ns_size = 5
 ns_letters = "_abcdefghijklmnopqrstuvwxyz0123456789"
 function start_name_select()
 	ns_pos = 0
-	ns_frame = 0
 	ns_name = {}
 	for i=0,ns_size-1 do
 		ns_name[i] = 0
@@ -81,7 +81,7 @@ function ns_update()
 	end
 	ns_pos = (ns_pos+ns_size) % ns_size
 	ns_name[ns_pos] = (ns_name[ns_pos]+#ns_letters) % #ns_letters
-	ns_frame += 1
+	frame += 1
 end
 function ns_draw()
 	cls()
@@ -89,7 +89,7 @@ function ns_draw()
 
 	local name = ""
 	for i=0,ns_size-1 do
-		if i==ns_pos and (ns_frame%16) < 8 then
+		if i==ns_pos and (frame%16) < 8 then
 			name = name .. (ns_name[i]>0 and "_" or " ")
 		else
 			name = name .. sub(ns_letters, ns_name[i]+1, ns_name[i]+1)
